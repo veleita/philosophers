@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2021/08/30 13:34:56 by mzomeno-          #+#    #+#              #
-#    Updated: 2021/10/17 13:34:41 by mzomeno-         ###   ########.fr        #
+#    Created: 2021/10/17 13:37:33 by mzomeno-          #+#    #+#              #
+#    Updated: 2021/10/29 18:25:17 by mzomeno-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,14 +15,20 @@ FLAGS = -Wall -Wextra -Werror
 
 NAME = philo
 
-SRCS = main.c
-OBJS = $(SRCS:.c=.o)
+N_PHILOS 		= 5
+TIME_TO_DIE 	= 200
+TIME_TO_EAT 	= 42
+TIME_TO_SLEEP 	= 58
+
+SRCS = 	main.c \
+		init.c
+OBJS = 	$(SRCS:.c=.o)
 
 
 all: $(NAME)
 
 
-%.o: %.cpp
+%.o: %.c
 	$(COMPILER) $(FLAGS) -c $< -o $@
 
 $(NAME): $(OBJS)
@@ -40,7 +46,7 @@ re: fclean all
 
 
 test: re
-	./$(NAME)
+	./$(NAME) $(N_PHILOS) $(TIME_TO_DIE) $(TIME_TO_EAT) $(TIME_TO_SLEEP)
 
 
 .PHONY: all clean fclean re test
