@@ -6,7 +6,7 @@
 #    By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/17 13:37:33 by mzomeno-          #+#    #+#              #
-#    Updated: 2021/10/29 18:25:17 by mzomeno-         ###   ########.fr        #
+#    Updated: 2021/11/01 19:08:22 by mzomeno-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,9 @@ TIME_TO_EAT 	= 42
 TIME_TO_SLEEP 	= 58
 
 SRCS = 	main.c \
-		init.c
+		init.c \
+		utils.c \
+		simulation.c
 OBJS = 	$(SRCS:.c=.o)
 
 
