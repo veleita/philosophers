@@ -6,7 +6,7 @@
 /*   By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 17:16:20 by mzomeno-          #+#    #+#             */
-/*   Updated: 2021/11/03 11:05:00 by mzomeno-         ###   ########.fr       */
+/*   Updated: 2021/11/03 13:38:04 by mzomeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ typedef struct 	s_config
 typedef struct 		s_philosopher {
 	int				id;
 	int				meals;
+	struct timeval	last_meal_time;
 	struct timeval	timestamp;
 	pthread_t		*thread;
 	pthread_mutex_t	timelock;
