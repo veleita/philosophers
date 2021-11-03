@@ -6,7 +6,7 @@
 /*   By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 17:16:20 by mzomeno-          #+#    #+#             */
-/*   Updated: 2021/11/01 19:03:26 by mzomeno-         ###   ########.fr       */
+/*   Updated: 2021/11/03 10:54:20 by mzomeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,18 @@
 # include <stdlib.h>	// malloc, free
 # include <sys/time.h>	// gettimeofday
 
+# define AVAIABLE 0
+# define TAKEN 1
 
 /*
 ************ STRUCTS ************
 */
 
+typedef struct			s_fork
+{
+	pthread_mutex_t		*mutex;
+	int					state;
+}						t_fork;
 /*
 ** t_config
 **  Main features, all threads share this information
@@ -51,6 +58,8 @@ typedef struct 	s_config
 		int		time_to_eat;
 		int		time_to_sleep;
 		int		number_of_times_each_philosopher_must_eat;
+		t_fork	*forks;
+		bool	stop_simulation;
 }				t_config;
 
 /*
@@ -82,8 +91,10 @@ typedef struct 		s_philosopher {
 ** init.c
 */
 t_config		parse(char **argv);
-pthread_mutex_t	**get_forks(int number_of_philos);
+t_fork			*get_forks(int number_of_philos);
 t_philosopher	**get_philos(t_config *common);
+void			launch_philos(int number_of_philosophers,
+				t_philosopher **philos);
 
 /*
 ** utils.c
@@ -97,7 +108,6 @@ int				ft_strlen(char *str);
 ** simulation.c
 */
 
-void		simulation(t_config *common, t_philosopher **philos,
-			pthread_mutex_t **forks);
+void		check_stop_conditions(t_config *common, t_philosopher **philos);
 void		*start_routine(void *arg);
 #endif

@@ -6,16 +6,25 @@
 /*   By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 17:17:55 by mzomeno-          #+#    #+#             */
-/*   Updated: 2021/11/01 19:07:30 by mzomeno-         ###   ########.fr       */
+/*   Updated: 2021/11/03 10:54:49 by mzomeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
 /*
-** pthread_create in line 38 opens a new thread that starts from function
-** start_routine() in simulation.c and executes alongside the main thread
+** each philo starts its own thread from function start_routine() in
+** simulation.c, this thread is executed alongside the main thread
 */
+void			launch_philos(int number_of_philosophers, t_philosopher **philos)
+{
+	int i;
+
+	i = 0;
+	while (number_of_philosophers)
+		pthread_create(philos[i]->thread, NULL, start_routine, philos[i]);
+}
+
 t_philosopher	**get_philos(t_config *common)
 {
 	t_philosopher	**philos;
@@ -37,24 +46,24 @@ t_philosopher	**get_philos(t_config *common)
 		philos[i]->timestamp = start_time;
 		pthread_mutex_init(&(philos[i]->timelock), NULL);
 		philos[i]->thread = malloc(sizeof(pthread_t *));
-		pthread_create(philos[i]->thread, NULL, start_routine, philos[i]);
 		i++;
 	}
 	return (philos);
 }
 
-pthread_mutex_t	**get_forks(int number_of_philos)
+t_fork			*get_forks(int number_of_philos)
 {
-	pthread_mutex_t	**forks;
-	int	i;
+	t_fork	*forks;
+	int		i;
 
 	i = 0;
-	forks = malloc(sizeof(pthread_mutex_t *) * number_of_philos);
+	forks = (t_fork *)malloc(sizeof(t_fork) * number_of_philos);
 	while (i < number_of_philos)
-		forks[i++] = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
-	i = 0;
-	while (i < number_of_philos)
-		pthread_mutex_init(forks[i++], NULL);
+	{
+		forks[i].mutex = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
+		pthread_mutex_init(forks[i].mutex, NULL);
+		forks[i++].state = AVAIABLE;
+	}
 	return (forks);
 }
 
