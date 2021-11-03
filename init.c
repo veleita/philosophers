@@ -6,7 +6,7 @@
 /*   By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 17:17:55 by mzomeno-          #+#    #+#             */
-/*   Updated: 2021/11/03 10:54:49 by mzomeno-         ###   ########.fr       */
+/*   Updated: 2021/11/03 11:14:44 by mzomeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,11 @@ void			launch_philos(int number_of_philosophers, t_philosopher **philos)
 	int i;
 
 	i = 0;
-	while (number_of_philosophers)
+	while (i < number_of_philosophers)
+	{
 		pthread_create(philos[i]->thread, NULL, start_routine, philos[i]);
+		i++;
+	}
 }
 
 t_philosopher	**get_philos(t_config *common)

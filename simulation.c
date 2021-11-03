@@ -6,7 +6,7 @@
 /*   By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/31 23:11:04 by mzomeno-          #+#    #+#             */
-/*   Updated: 2021/11/03 10:54:58 by mzomeno-         ###   ########.fr       */
+/*   Updated: 2021/11/03 11:06:47 by mzomeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ void		*start_routine(void *arg)
 	t_philosopher	*stats;
 
 	stats = (t_philosopher *)arg;
-	printf("I am philo %d!", stats->id);
+	while (stats->common->stop_simulation == false)
+		printf("I am philo %d!", stats->id);
 	return ((void*)stats);
 }
 
@@ -45,6 +46,7 @@ void		check_stop_conditions(t_config *common, t_philosopher **philos)
 	{
 		pthread_mutex_lock(&philos[i]->timelock);
 		gettimeofday(&actual_time, NULL);
+		printf("Another message");
 		if (get_time_from_last_meal(actual_time, philos[i]->timestamp)
 				>= common->time_to_die)
 		{
