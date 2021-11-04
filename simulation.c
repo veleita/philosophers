@@ -6,7 +6,7 @@
 /*   By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/31 23:11:04 by mzomeno-          #+#    #+#             */
-/*   Updated: 2021/11/04 13:15:42 by mzomeno-         ###   ########.fr       */
+/*   Updated: 2021/11/04 15:15:01 by mzomeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,38 +15,33 @@
 /*
 ** PHILO THREAD
 */
-void		eat_sleep_or_think(t_philosopher *stats)
+static void	eat_sleep_or_think(t_philosopher *stats)
 {
-	if (stats->time_to_die <= (stats->time_to_eat + stats->time_to_sleep))
+	if (stats->common->time_to_die <=
+			(stats->common->time_to_eat + stats->common->time_to_sleep))
 	{
-		take_forks(stats->id, stats->common->number_of_philos - 1,
+		take_forks(stats->id, stats->common->number_of_philosophers - 1,
 				stats->common);
-		eat();
-		sleep();
+		philo_eat(stats);
+		philo_sleep(stats->id, stats->common);
 	}
-	else
-		think();
+	printer(THINK, stats->id, stats->common);
 }
 
-void		*start_routine(void *arg)
+void	*start_routine(void *arg)
 {
 	t_philosopher	*stats;
 
 	stats = (t_philosopher *)arg;
 	while (stats->common->stop_simulation == false)
-		eat_sleep_or_think();
+		eat_sleep_or_think(arg);
+	return (NULL);
 }
 
 /*
 ** MAIN THREAD
 */
-long int	get_time_from_last_meal(struct timeval t1, struct timeval t2)
-{
-	return ((t1.tv_sec * 1000 + t1.tv_usec / 1000)
-		- (t2.tv_sec * 1000 + t2.tv_usec / 1000));
-}
-
-void		check_stop_conditions(t_config *common, t_philosopher **philos)
+void	check_stop_conditions(t_config *common, t_philosopher **philos)
 {
 	int i;
 	struct timeval	actual_time;
@@ -56,7 +51,7 @@ void		check_stop_conditions(t_config *common, t_philosopher **philos)
 	{
 		pthread_mutex_lock(&philos[i]->timelock);
 		gettimeofday(&actual_time, NULL);
-		if (get_time_from_last_meal(actual_time, philos[i]->last_meal_time)
+		if (get_time_lapse(actual_time, philos[i]->last_meal_time)
 				>= common->time_to_die)
 		{
 			common->stop_simulation = true;

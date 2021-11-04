@@ -6,18 +6,18 @@
 /*   By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 13:41:07 by mzomeno-          #+#    #+#             */
-/*   Updated: 2021/11/04 14:02:12 by mzomeno-         ###   ########.fr       */
+/*   Updated: 2021/11/04 15:14:37 by mzomeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-static int	lock_fork(t_forks *forks, int fork_index)
+static int	lock_fork(t_fork *forks, int fork_index)
 {
-	if (forks[fork_index]->status == AVAIABLE)
+	if (forks[fork_index].state== AVAIABLE)
 	{
-		pthread_mutex_lock(forks[fork_index]->mutex);
-		forks[fork_index]->status = BUSY;
+		pthread_mutex_lock(forks[fork_index].mutex);
+		forks[fork_index].state= TAKEN;
 		return (DONE);
 	}
 	else
@@ -45,26 +45,29 @@ void	take_forks(int philo_id, int last_philo, t_config *common)
 		right_fork = philo_id + 1;
 	left_fork_taken = false;
 	right_fork_taken = false;
-	while (left_fork_taken = false || right_fork_taken = false)
+	while (left_fork_taken == false || right_fork_taken == false)
 	{
 		if (right_fork_taken == true)
-			pthread_mutex_unlock(forks[right_fork]->mutex);
+			pthread_mutex_unlock(common->forks[right_fork].mutex);
 		else if (left_fork_taken == true)
-			pthread_mutex_unlock(forks[left_fork]->mutex);
+			pthread_mutex_unlock(common->forks[left_fork].mutex);
 		left_fork_taken = (bool)lock_fork(common->forks, left_fork);
 		right_fork_taken = (bool)lock_fork(common->forks, right_fork);
 	}
-	printer(FORKS_TAKEN, philo_id, common);
+	printer(FORKS, philo_id, common);
 }
 
-void	eat()
+void	philo_eat(t_philosopher *stats)
 {
+	pthread_mutex_lock(&stats->timelock);
+	printer(EAT, stats->id, stats->common);
+	gettimeofday(&stats->last_meal_time, NULL);
+	pthread_mutex_unlock(&stats->timelock);
+	ft_usleep(stats->common->time_to_eat, &(stats->common->stop_simulation));
 }
 
-void	sleep()
+void	philo_sleep(int philo_id, t_config *common)
 {
-}
-
-void	think()
-{
+	printer(SLEEP, philo_id, common);
+	ft_usleep(common->time_to_sleep, &(common->stop_simulation));
 }

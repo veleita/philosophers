@@ -6,7 +6,7 @@
 /*   By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 17:16:20 by mzomeno-          #+#    #+#             */
-/*   Updated: 2021/11/04 14:05:26 by mzomeno-         ###   ########.fr       */
+/*   Updated: 2021/11/04 15:12:56 by mzomeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <unistd.h>	// write
 # include <stdlib.h>	// malloc, free
 # include <sys/time.h>	// gettimeofday
+# include <stdio.h>		// printf
 
 # define AVAIABLE 0
 # define TAKEN 1
@@ -33,9 +34,8 @@
 # define THINK 	"is thinking"
 # define DIE 	"died"
 
-/*
-************ STRUCTS ************
-*/
+
+/************ STRUCTS ************/
 
 typedef struct			s_fork
 {
@@ -62,13 +62,15 @@ typedef struct			s_fork
 */
 typedef struct 	s_config
 {
-		int		number_of_philosophers;
-		int		time_to_die;
-		int		time_to_eat;
-		int		time_to_sleep;
-		int		number_of_times_each_philosopher_must_eat;
-		t_fork	*forks;
-		bool	stop_simulation;
+		int				number_of_philosophers;
+		int				time_to_die;
+		int				time_to_eat;
+		int				time_to_sleep;
+		int				number_of_times_each_philosopher_must_eat;
+		t_fork			*forks;
+		pthread_mutex_t	printer;
+		bool			stop_simulation;
+		struct timeval	start_time;
 }				t_config;
 
 /*
@@ -79,28 +81,25 @@ typedef struct 	s_config
 **	-meals: 	Number of times the philosopher ate
 **	-timestamp: Last time the philosopher ate
 ** 	-thread: 	Pointer to philosopher's thread
-** 	-timelock: 	Mutex that controls access to philosopher's timestamp
+** 	-timelock: 	Mutex that protects access to last_meal_time
 **	-p: 		Pointer to the struct above
 */
 typedef struct 		s_philosopher {
 	int				id;
 	int				meals;
 	struct timeval	last_meal_time;
-	struct timeval	timestamp;
-	pthread_t		*thread;
 	pthread_mutex_t	timelock;
+	pthread_t		*thread;
 	t_config		*common;
 }	t_philosopher;
 
 
-/*
-************ FUNCTION DEFINITIONS ************
-*/
+/************ FUNCTION DEFINITIONS *************/
 
 /*
 ** init.c
 */
-t_config		parse(char **argv);
+t_config		get_common(char **argv);
 t_fork			*get_forks(int number_of_philos);
 t_philosopher	**get_philos(t_config *common);
 void			launch_philos(int number_of_philosophers,
@@ -113,8 +112,15 @@ void			launch_philos(int number_of_philosophers,
 unsigned int	ft_atoi(char *str);
 bool			ft_isdigit(char *str);
 int				ft_strlen(char *str);
-void			printer(const char *message, int philo_id, t_config *common);
+int				ft_strcmp(const char *s1, const char *s2);
 
+
+/*
+** custom_utils.c
+*/
+void			ft_usleep(int ms, bool *stop_simulation);
+void			printer(const char *message, int philo_id, t_config *common);
+long int		get_time_lapse(struct timeval t1, struct timeval t2);
 
 /*
 ** simulation.c
@@ -128,5 +134,8 @@ void		*start_routine(void *arg);
 ** life_cycle.c
 */
 
-void		take_forks(int philo_id, int last_philo, t_config *common);
+void	take_forks(int philo_id, int last_philo, t_config *common);
+void	philo_eat(t_philosopher *stats);
+void	philo_sleep(int philo_id, t_config *common);
+
 #endif

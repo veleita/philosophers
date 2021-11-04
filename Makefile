@@ -6,7 +6,7 @@
 #    By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/17 13:37:33 by mzomeno-          #+#    #+#              #
-#    Updated: 2021/11/02 17:40:01 by mzomeno-         ###   ########.fr        #
+#    Updated: 2021/11/04 14:53:55 by mzomeno-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,8 @@ TIME_TO_SLEEP 	= 58
 SRCS = 	main.c \
 		init.c \
 		utils.c \
+		custom_utils.c \
+		life_cycle.c \
 		simulation.c
 OBJS = 	$(SRCS:.c=.o)
 
