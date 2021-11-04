@@ -6,7 +6,7 @@
 /*   By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 13:41:07 by mzomeno-          #+#    #+#             */
-/*   Updated: 2021/11/04 16:11:50 by mzomeno-         ###   ########.fr       */
+/*   Updated: 2021/11/04 17:13:23 by mzomeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,13 @@ static void	just_eat(t_philosopher *stats)
 	ft_usleep(stats->common->time_to_eat, &(stats->common->stop_simulation));
 }
 
+static void	release_forks(t_fork *forks, int left_fork, int right_fork)
+{
+	pthread_mutex_unlock(forks[right_fork].mutex);
+	forks[right_fork].state = AVAIABLE;
+	pthread_mutex_unlock(forks[left_fork].mutex);
+	forks[left_fork].state = AVAIABLE;
+}
 /*
 ** Left_fork = philo_id
 ** Right_fork = philo_id + 1 (or 0 for the last philo)
@@ -66,8 +73,7 @@ void	philo_eat(int philo_id, int last_philo, t_config *common,
 	}
 	printer(FORKS, philo_id, common);
 	just_eat(stats);
-	pthread_mutex_unlock(common->forks[right_fork].mutex);
-	pthread_mutex_unlock(common->forks[left_fork].mutex);
+	release_forks(common->forks, left_fork, right_fork);
 }
 
 void	philo_sleep(int philo_id, t_config *common)

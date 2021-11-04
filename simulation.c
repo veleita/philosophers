@@ -6,7 +6,7 @@
 /*   By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/31 23:11:04 by mzomeno-          #+#    #+#             */
-/*   Updated: 2021/11/04 16:53:59 by mzomeno-         ###   ########.fr       */
+/*   Updated: 2021/11/04 17:08:53 by mzomeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ bool	the_philo_needs_to_eat(struct timeval last_meal_time, int time_to_die,
 	gettimeofday(&actual_time, NULL);
 	time_of_starvation = get_time_lapse(actual_time, last_meal_time);
 	time_left = time_to_die - time_of_starvation;
-	time_to_digest = time_to_eat + time_to_sleep;
+	time_to_digest = time_to_eat + time_to_sleep + 100;
 	if (time_left <= time_to_digest)
 		return (true);
 	else
@@ -36,7 +36,7 @@ bool	the_philo_needs_to_eat(struct timeval last_meal_time, int time_to_die,
 
 static void	eat_sleep_or_think(t_philosopher *stats)
 {
-	if (the_philo_needs_to_eat(stats->last_meal_time,
+	while (the_philo_needs_to_eat(stats->last_meal_time,
 				stats->common->time_to_die,
 				stats->common->time_to_eat,
 				stats->common->time_to_sleep) &&
@@ -76,7 +76,7 @@ void	check_stop_conditions(t_config *common, t_philosopher **philos)
 				>= common->time_to_die)
 		{
 			common->stop_simulation = true;
-			break;
+			printf("someone died\n");
 		}
 		pthread_mutex_unlock(&philos[i]->timelock);
 		i++;
