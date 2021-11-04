@@ -6,7 +6,7 @@
 /*   By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/31 23:11:04 by mzomeno-          #+#    #+#             */
-/*   Updated: 2021/11/03 13:44:03 by mzomeno-         ###   ########.fr       */
+/*   Updated: 2021/11/04 13:05:06 by mzomeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ void		eat_sleep_or_think(t_philosopher *stats)
 {
 	if (stats->time_to_die <= (stats->time_to_eat + stats->time_to_sleep))
 	{
-		take_forks(stats->forks);
+		take_forks(stats->id, stats->common->number_of_philos - 1,
+				stats->common);
 		eat();
 		sleep();
 	}

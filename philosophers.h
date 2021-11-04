@@ -6,7 +6,7 @@
 /*   By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 17:16:20 by mzomeno-          #+#    #+#             */
-/*   Updated: 2021/11/03 13:38:04 by mzomeno-         ###   ########.fr       */
+/*   Updated: 2021/11/04 13:00:14 by mzomeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,15 @@
 
 # define AVAIABLE 0
 # define TAKEN 1
+
+# define FAIL 0
+# define DONE 1
+
+# define FORKS	"has taken the forks"
+# define EAT 	"is eating"
+# define SLEEP 	"is sleeping"
+# define THINK 	"is thinking"
+# define DIE 	"died"
 
 /*
 ************ STRUCTS ************
@@ -104,6 +113,8 @@ void			launch_philos(int number_of_philosophers,
 unsigned int	ft_atoi(char *str);
 bool			ft_isdigit(char *str);
 int				ft_strlen(char *str);
+void			printer(const char *message, int philo_id, t_config *common);
+
 
 /*
 ** simulation.c
@@ -111,4 +122,11 @@ int				ft_strlen(char *str);
 
 void		check_stop_conditions(t_config *common, t_philosopher **philos);
 void		*start_routine(void *arg);
+
+
+/*
+** life_cycle.c
+*/
+
+void		take_forks(int philo_id, int last_philo, t_config *common);
 #endif

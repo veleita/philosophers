@@ -6,11 +6,23 @@
 /*   By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/31 21:50:36 by mzomeno-          #+#    #+#             */
-/*   Updated: 2021/11/01 13:53:36 by mzomeno-         ###   ########.fr       */
+/*   Updated: 2021/11/04 09:41:43 by mzomeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+void	printer(t_philosopher *philo, const char *s)
+{
+	struct timeval	time;
+
+	pthread_mutex_lock(philo->p->printer);
+	gettimeofday(&time, NULL);
+	if (philo->p->on || !ft_strcmp(DIE, s))
+		printf("%li %i %s\n", get_timeval(time, philo->p->start),
+			philo->id, s);
+	pthread_mutex_unlock(philo->p->printer);
+}
 
 int				ft_strlen(char *str)
 {
