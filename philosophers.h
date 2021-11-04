@@ -6,7 +6,7 @@
 /*   By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 17:16:20 by mzomeno-          #+#    #+#             */
-/*   Updated: 2021/11/04 15:12:56 by mzomeno-         ###   ########.fr       */
+/*   Updated: 2021/11/04 15:56:22 by mzomeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,9 +118,10 @@ int				ft_strcmp(const char *s1, const char *s2);
 /*
 ** custom_utils.c
 */
-void			ft_usleep(int ms, bool *stop_simulation);
-void			printer(const char *message, int philo_id, t_config *common);
-long int		get_time_lapse(struct timeval t1, struct timeval t2);
+void		ft_usleep(int ms, bool *stop_simulation);
+void		printer(const char *message, int philo_id, t_config *common);
+long int	time_struct_to_int(struct timeval s);
+long int	get_time_lapse(struct timeval t1, struct timeval t2);
 
 /*
 ** simulation.c

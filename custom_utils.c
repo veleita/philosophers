@@ -6,16 +6,20 @@
 /*   By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:31:43 by mzomeno-          #+#    #+#             */
-/*   Updated: 2021/11/04 14:55:26 by mzomeno-         ###   ########.fr       */
+/*   Updated: 2021/11/04 15:57:41 by mzomeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
+long int	time_struct_to_int(struct timeval s)
+{
+	return (s.tv_sec * 1000 + s.tv_usec / 1000);
+}
+
 long int	get_time_lapse(struct timeval t1, struct timeval t2)
 {
-	return ((t1.tv_sec * 1000 + t1.tv_usec / 1000)
-		- (t2.tv_sec * 1000 + t2.tv_usec / 1000));
+	return (time_struct_to_int(t1) - time_struct_to_int(t2));
 }
 
 void	printer(const char *message, int philo_id, t_config *common)
