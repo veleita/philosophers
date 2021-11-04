@@ -6,7 +6,7 @@
 /*   By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 13:41:07 by mzomeno-          #+#    #+#             */
-/*   Updated: 2021/11/04 15:14:37 by mzomeno-         ###   ########.fr       */
+/*   Updated: 2021/11/04 16:11:50 by mzomeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,15 @@ static int	lock_fork(t_fork *forks, int fork_index)
 		return (FAIL);
 }
 
+static void	just_eat(t_philosopher *stats)
+{
+	pthread_mutex_lock(&stats->timelock);
+	printer(EAT, stats->id, stats->common);
+	gettimeofday(&stats->last_meal_time, NULL);
+	pthread_mutex_unlock(&stats->timelock);
+	ft_usleep(stats->common->time_to_eat, &(stats->common->stop_simulation));
+}
+
 /*
 ** Left_fork = philo_id
 ** Right_fork = philo_id + 1 (or 0 for the last philo)
@@ -31,7 +40,8 @@ static int	lock_fork(t_fork *forks, int fork_index)
 ** If the philo manages to take both forks, print a message
 ** else, free the right fork and return
 */
-void	take_forks(int philo_id, int last_philo, t_config *common)
+void	philo_eat(int philo_id, int last_philo, t_config *common,
+		t_philosopher *stats)
 {
 	int		left_fork;
 	int		right_fork;
@@ -55,15 +65,9 @@ void	take_forks(int philo_id, int last_philo, t_config *common)
 		right_fork_taken = (bool)lock_fork(common->forks, right_fork);
 	}
 	printer(FORKS, philo_id, common);
-}
-
-void	philo_eat(t_philosopher *stats)
-{
-	pthread_mutex_lock(&stats->timelock);
-	printer(EAT, stats->id, stats->common);
-	gettimeofday(&stats->last_meal_time, NULL);
-	pthread_mutex_unlock(&stats->timelock);
-	ft_usleep(stats->common->time_to_eat, &(stats->common->stop_simulation));
+	just_eat(stats);
+	pthread_mutex_unlock(common->forks[right_fork].mutex);
+	pthread_mutex_unlock(common->forks[left_fork].mutex);
 }
 
 void	philo_sleep(int philo_id, t_config *common)

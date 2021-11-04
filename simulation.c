@@ -6,7 +6,7 @@
 /*   By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/31 23:11:04 by mzomeno-          #+#    #+#             */
-/*   Updated: 2021/11/04 15:58:49 by mzomeno-         ###   ########.fr       */
+/*   Updated: 2021/11/04 16:53:59 by mzomeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,35 @@
 /*
 ** PHILO THREAD
 */
+
+bool	the_philo_needs_to_eat(struct timeval last_meal_time, int time_to_die,
+		int time_to_eat, int time_to_sleep)
+{
+	struct timeval	actual_time;
+	long int		time_of_starvation;
+	long int		time_left;
+	int				time_to_digest;
+
+	gettimeofday(&actual_time, NULL);
+	time_of_starvation = get_time_lapse(actual_time, last_meal_time);
+	time_left = time_to_die - time_of_starvation;
+	time_to_digest = time_to_eat + time_to_sleep;
+	if (time_left <= time_to_digest)
+		return (true);
+	else
+		return (false);
+}
+
 static void	eat_sleep_or_think(t_philosopher *stats)
 {
-	long int	time_left;
-	int			time_to_digest;
-
-	time_left = stats->common->time_to_die -
-		time_struct_to_int(stats->last_meal_time);
-	time_to_digest = stats->common->time_to_eat + stats->common->time_to_sleep;
-	if (time_left - time_to_digest <= 0)
+	if (the_philo_needs_to_eat(stats->last_meal_time,
+				stats->common->time_to_die,
+				stats->common->time_to_eat,
+				stats->common->time_to_sleep) &&
+			stats->common->stop_simulation == false)
 	{
-		take_forks(stats->id, stats->common->number_of_philosophers - 1,
-				stats->common);
-		philo_eat(stats);
+		philo_eat(stats->id, stats->common->number_of_philosophers - 1,
+				stats->common, stats);
 		philo_sleep(stats->id, stats->common);
 		printer(THINK, stats->id, stats->common);
 	}
