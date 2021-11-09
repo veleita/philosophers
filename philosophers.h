@@ -6,7 +6,7 @@
 /*   By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 17:16:20 by mzomeno-          #+#    #+#             */
-/*   Updated: 2021/11/09 18:01:24 by mzomeno-         ###   ########.fr       */
+/*   Updated: 2021/11/09 18:16:47 by mzomeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,5 +143,11 @@ void		*start_routine(void *arg);
 void	take_forks(int philo_id, int last_philo, t_config *common);
 void	eat_and_sleep(int philo_id, int last_philo, t_config *common,
 		t_philosopher *stats);
+
+/*
+** termination.c
+*/
+
+void		death(int dead_philo_id, t_config *common, t_philosopher **philos);
 
 #endif

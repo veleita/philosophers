@@ -6,7 +6,7 @@
 /*   By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/31 23:11:04 by mzomeno-          #+#    #+#             */
-/*   Updated: 2021/11/09 18:02:08 by mzomeno-         ###   ########.fr       */
+/*   Updated: 2021/11/09 18:12:10 by mzomeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,7 @@ void	check_stop_conditions(t_config *common, t_philosopher **philos)
 		gettimeofday(&actual_time, NULL);
 		if (get_time_lapse(actual_time, philos[i]->last_meal_time)
 				>= common->time_to_die + 10)
-		{
-			common->stop_simulation = true;
-			printer(DIE, i, common);
-		}
+			death(i, common, philos);
 		if (philos[i]->number_of_meals > common->number_of_meals)
 			have_eaten_n_times[i] = true;
 		pthread_mutex_unlock(&philos[i]->timelock);
