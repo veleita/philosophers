@@ -6,7 +6,7 @@
 /*   By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/31 23:11:04 by mzomeno-          #+#    #+#             */
-/*   Updated: 2021/11/09 17:04:27 by mzomeno-         ###   ########.fr       */
+/*   Updated: 2021/11/09 17:37:46 by mzomeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 /*
 ** PHILO THREAD
+*/
 
 bool	the_philo_needs_to_eat(struct timeval last_meal_time, int time_to_die,
 		int time_to_eat, int time_to_sleep)
@@ -27,27 +28,28 @@ bool	the_philo_needs_to_eat(struct timeval last_meal_time, int time_to_die,
 	time_of_starvation = get_time_lapse(actual_time, last_meal_time);
 	time_left = time_to_die - time_of_starvation;
 	time_to_digest = time_to_eat + time_to_sleep + 100;
-	if (time_left <= time_to_digest)
+	if (time_left <= time_to_digest * 0.5)
 		return (true);
 	else
 		return (false);
 }
-*/
 
 static void	live(t_philosopher *stats)
 {
-//	if (the_philo_needs_to_eat(stats->last_meal_time,
-//				stats->common->time_to_die,
-//				stats->common->time_to_eat,
-//				stats->common->time_to_sleep))
-//	{
-	if (stats->number_of_meals <= stats->common->number_of_meals)
+	if (the_philo_needs_to_eat(stats->last_meal_time,
+				stats->common->time_to_die,
+				stats->common->time_to_eat,
+				stats->common->time_to_sleep))
 	{
+//	if (stats->number_of_meals <= stats->common->number_of_meals)
+//	{
 		philo_eat(stats->id, stats->common->number_of_philosophers - 1,
 				stats->common, stats);
 //		philo_sleep(stats->id, stats->common);
 		printer(THINK, stats->id, stats->common);
 	}
+	else
+		ft_usleep(2, &stats->common->stop_simulation);
 }
 
 void	*start_routine(void *arg)
@@ -55,6 +57,9 @@ void	*start_routine(void *arg)
 	t_philosopher	*stats;
 
 	stats = (t_philosopher *)arg;
+	philo_eat(stats->id, stats->common->number_of_philosophers - 1,
+			stats->common, stats);
+	printer(THINK, stats->id, stats->common);
 	while (stats->common->stop_simulation == false)
 		live(arg);
 	return (NULL);
