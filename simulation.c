@@ -6,7 +6,7 @@
 /*   By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/31 23:11:04 by mzomeno-          #+#    #+#             */
-/*   Updated: 2021/11/09 13:12:10 by mzomeno-         ###   ########.fr       */
+/*   Updated: 2021/11/09 13:33:31 by mzomeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,16 @@ bool	the_philo_needs_to_eat(struct timeval last_meal_time, int time_to_die,
 
 static void	live(t_philosopher *stats)
 {
-	if (the_philo_needs_to_eat(stats->last_meal_time,
-				stats->common->time_to_die,
-				stats->common->time_to_eat,
-				stats->common->time_to_sleep))
-	{
-		philo_eat(stats->id, stats->common->number_of_philosophers - 1,
+//	if (the_philo_needs_to_eat(stats->last_meal_time,
+//				stats->common->time_to_die,
+//				stats->common->time_to_eat,
+//				stats->common->time_to_sleep))
+//	{
+	philo_eat(stats->id, stats->common->number_of_philosophers - 1,
 				stats->common, stats);
 //		philo_sleep(stats->id, stats->common);
-		printer(THINK, stats->id, stats->common);
-	}
+	printer(THINK, stats->id, stats->common);
+//	}
 }
 
 void	*start_routine(void *arg)
@@ -75,7 +75,7 @@ void	check_stop_conditions(t_config *common, t_philosopher **philos)
 				>= common->time_to_die)
 		{
 			common->stop_simulation = true;
-			printf("philo %d died\n", i);
+			printer(DIE, i, common);
 		}
 		pthread_mutex_unlock(&philos[i]->timelock);
 		i++;

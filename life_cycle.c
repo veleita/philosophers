@@ -6,7 +6,7 @@
 /*   By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 13:41:07 by mzomeno-          #+#    #+#             */
-/*   Updated: 2021/11/09 13:11:59 by mzomeno-         ###   ########.fr       */
+/*   Updated: 2021/11/09 13:25:41 by mzomeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,15 @@ void	philo_eat(int philo_id, int last_philo, t_config *common,
 	while (left_fork_taken == false || right_fork_taken == false)
 	{
 		if (right_fork_taken == true)
+		{
 			pthread_mutex_unlock(common->forks[right_fork]->mutex);
+			common->forks[right_fork]->state = AVAIABLE;
+		}
 		else if (left_fork_taken == true)
+		{
 			pthread_mutex_unlock(common->forks[left_fork]->mutex);
+			common->forks[left_fork]->state = AVAIABLE;
+		}
 		left_fork_taken = (bool)lock_fork(common->forks, left_fork);
 		right_fork_taken = (bool)lock_fork(common->forks, right_fork);
 	}
@@ -78,7 +84,10 @@ void	philo_eat(int philo_id, int last_philo, t_config *common,
 	just_eat(stats);
 	release_forks(common->forks, left_fork, right_fork);
 	printer(FORKSNT, philo_id, common);
-	philo_sleep(philo_id, common);
+	printer(SLEEP, philo_id, common);
+	ft_usleep(common->time_to_sleep, &(common->stop_simulation));
+	printer(WAKE, philo_id, common);
+//	philo_sleep(philo_id, common);
 }
 
 void	philo_sleep(int philo_id, t_config *common)
