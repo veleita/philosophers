@@ -6,7 +6,7 @@
 /*   By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/31 23:11:04 by mzomeno-          #+#    #+#             */
-/*   Updated: 2021/11/09 17:37:46 by mzomeno-         ###   ########.fr       */
+/*   Updated: 2021/11/09 18:02:08 by mzomeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,8 @@ static void	live(t_philosopher *stats)
 				stats->common->time_to_eat,
 				stats->common->time_to_sleep))
 	{
-//	if (stats->number_of_meals <= stats->common->number_of_meals)
-//	{
-		philo_eat(stats->id, stats->common->number_of_philosophers - 1,
+		eat_and_sleep(stats->id, stats->common->number_of_philosophers - 1,
 				stats->common, stats);
-//		philo_sleep(stats->id, stats->common);
 		printer(THINK, stats->id, stats->common);
 	}
 	else
@@ -57,7 +54,7 @@ void	*start_routine(void *arg)
 	t_philosopher	*stats;
 
 	stats = (t_philosopher *)arg;
-	philo_eat(stats->id, stats->common->number_of_philosophers - 1,
+	eat_and_sleep(stats->id, stats->common->number_of_philosophers - 1,
 			stats->common, stats);
 	printer(THINK, stats->id, stats->common);
 	while (stats->common->stop_simulation == false)
