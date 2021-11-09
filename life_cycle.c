@@ -6,7 +6,7 @@
 /*   By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 13:41:07 by mzomeno-          #+#    #+#             */
-/*   Updated: 2021/11/09 13:25:41 by mzomeno-         ###   ########.fr       */
+/*   Updated: 2021/11/09 14:21:41 by mzomeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,9 @@ static int	lock_fork(t_fork **forks, int fork_index)
 
 static void	just_eat(t_philosopher *stats)
 {
-	printer(EAT, stats->id, stats->common);
 	pthread_mutex_lock(&stats->timelock);
+	stats->number_of_meals++;
+	printer(EAT, stats->id, stats->common);
 	gettimeofday(&stats->last_meal_time, NULL);
 	pthread_mutex_unlock(&stats->timelock);
 	ft_usleep(stats->common->time_to_eat, &(stats->common->stop_simulation));
@@ -62,9 +63,6 @@ void	philo_eat(int philo_id, int last_philo, t_config *common,
 		right_fork = philo_id + 1;
 	left_fork_taken = false;
 	right_fork_taken = false;
-	printf("philo %d FORKS: %d | %d\n", philo_id,
-	common->forks[left_fork]->state,
-	common->forks[right_fork]->state);
 	while (left_fork_taken == false || right_fork_taken == false)
 	{
 		if (right_fork_taken == true)
@@ -82,8 +80,8 @@ void	philo_eat(int philo_id, int last_philo, t_config *common,
 	}
 	printer(FORKS, philo_id, common);
 	just_eat(stats);
-	release_forks(common->forks, left_fork, right_fork);
 	printer(FORKSNT, philo_id, common);
+	release_forks(common->forks, left_fork, right_fork);
 	printer(SLEEP, philo_id, common);
 	ft_usleep(common->time_to_sleep, &(common->stop_simulation));
 	printer(WAKE, philo_id, common);

@@ -6,7 +6,7 @@
 /*   By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 17:17:55 by mzomeno-          #+#    #+#             */
-/*   Updated: 2021/11/09 12:53:02 by mzomeno-         ###   ########.fr       */
+/*   Updated: 2021/11/09 14:40:57 by mzomeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ t_philosopher	**get_philos(t_config *common)
 		philos[i]->meals = 0;
 		philos[i]->common = common;
 		philos[i]->last_meal_time = start_time;
+		philos[i]->number_of_meals = 0;
 		pthread_mutex_init(&(philos[i]->timelock), NULL);
 		philos[i]->thread = malloc(sizeof(pthread_t *));
 		i++;
@@ -82,6 +83,7 @@ t_config	get_common(char **argv)
 	common.time_to_sleep = ft_atoi(argv[4]);
 	common.forks = get_forks(common.number_of_philosophers);
 	common.stop_simulation = false;
+	common.number_of_meals = 0;
 	gettimeofday(&common.start_time, NULL);
 	return (common);	
 }

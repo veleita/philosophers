@@ -6,7 +6,7 @@
 /*   By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 17:16:20 by mzomeno-          #+#    #+#             */
-/*   Updated: 2021/11/09 12:54:51 by mzomeno-         ###   ########.fr       */
+/*   Updated: 2021/11/09 14:11:17 by mzomeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ typedef struct 	s_config
 		int				time_to_eat;
 		int				time_to_sleep;
 		int				number_of_times_each_philosopher_must_eat;
+		int				number_of_meals;
 		t_fork			**forks;
 		pthread_mutex_t	printer;
 		bool			stop_simulation;
@@ -89,6 +90,7 @@ typedef struct 	s_config
 typedef struct 		s_philosopher {
 	int				id;
 	int				meals;
+	int				number_of_meals;
 	struct timeval	last_meal_time;
 	pthread_mutex_t	timelock;
 	pthread_t		*thread;
