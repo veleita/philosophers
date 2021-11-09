@@ -6,7 +6,7 @@
 /*   By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 13:41:07 by mzomeno-          #+#    #+#             */
-/*   Updated: 2021/11/09 14:21:41 by mzomeno-         ###   ########.fr       */
+/*   Updated: 2021/11/09 17:03:09 by mzomeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	philo_eat(int philo_id, int last_philo, t_config *common,
 	}
 	printer(FORKS, philo_id, common);
 	just_eat(stats);
-	printer(FORKSNT, philo_id, common);
+//	printer(FORKSNT, philo_id, common);
 	release_forks(common->forks, left_fork, right_fork);
 	printer(SLEEP, philo_id, common);
 	ft_usleep(common->time_to_sleep, &(common->stop_simulation));

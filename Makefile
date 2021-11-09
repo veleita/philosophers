@@ -6,7 +6,7 @@
 #    By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/17 13:37:33 by mzomeno-          #+#    #+#              #
-#    Updated: 2021/11/09 13:42:39 by mzomeno-         ###   ########.fr        #
+#    Updated: 2021/11/09 17:01:07 by mzomeno-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,10 +15,10 @@ FLAGS = -Wall -Wextra -Werror -pthread -g
 
 NAME = philo
 
-N_PHILOS 		= 4
-TIME_TO_DIE 	= 310
+N_PHILOS 		= 5
+TIME_TO_DIE 	= 800
 TIME_TO_EAT 	= 200
-TIME_TO_SLEEP 	= 100
+TIME_TO_SLEEP 	= 200
 
 SRCS = 	main.c \
 		init.c \

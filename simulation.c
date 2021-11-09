@@ -6,7 +6,7 @@
 /*   By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/31 23:11:04 by mzomeno-          #+#    #+#             */
-/*   Updated: 2021/11/09 14:42:16 by mzomeno-         ###   ########.fr       */
+/*   Updated: 2021/11/09 17:04:27 by mzomeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,6 @@ static void	live(t_philosopher *stats)
 //	{
 	if (stats->number_of_meals <= stats->common->number_of_meals)
 	{
-		printf("Philo %d n of meals: %d | Global n of meals: %d\n", stats->id + 1,
-			stats->number_of_meals,
-			stats->common->number_of_meals);
-		printf("Philo %d is waiting to eat\n", stats->id + 1);
 		philo_eat(stats->id, stats->common->number_of_philosophers - 1,
 				stats->common, stats);
 //		philo_sleep(stats->id, stats->common);
@@ -81,7 +77,7 @@ void	check_stop_conditions(t_config *common, t_philosopher **philos)
 		pthread_mutex_lock(&philos[i]->timelock);
 		gettimeofday(&actual_time, NULL);
 		if (get_time_lapse(actual_time, philos[i]->last_meal_time)
-				>= common->time_to_die)
+				>= common->time_to_die + 10)
 		{
 			common->stop_simulation = true;
 			printer(DIE, i, common);

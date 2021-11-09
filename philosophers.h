@@ -6,7 +6,7 @@
 /*   By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 17:16:20 by mzomeno-          #+#    #+#             */
-/*   Updated: 2021/11/09 14:11:17 by mzomeno-         ###   ########.fr       */
+/*   Updated: 2021/11/09 16:52:48 by mzomeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,8 +115,9 @@ void			launch_philos(int number_of_philosophers,
 
 unsigned int	ft_atoi(char *str);
 bool			ft_isdigit(char *str);
-int				ft_strlen(char *str);
+int				ft_strlen(const char *str);
 int				ft_strcmp(const char *s1, const char *s2);
+void	ft_putnbr_fd(int n, int fd);
 
 
 /*
