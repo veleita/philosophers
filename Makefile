@@ -6,19 +6,19 @@
 #    By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/17 13:37:33 by mzomeno-          #+#    #+#              #
-#    Updated: 2021/11/04 14:53:55 by mzomeno-         ###   ########.fr        #
+#    Updated: 2021/11/09 12:25:26 by mzomeno-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 COMPILER = gcc
-FLAGS = -Wall -Wextra -Werror -g
+FLAGS = -Wall -Wextra -Werror -pthread -g
 
 NAME = philo
 
 N_PHILOS 		= 5
-TIME_TO_DIE 	= 200
-TIME_TO_EAT 	= 42
-TIME_TO_SLEEP 	= 58
+TIME_TO_DIE 	= 800
+TIME_TO_EAT 	= 200
+TIME_TO_SLEEP 	= 200
 
 SRCS = 	main.c \
 		init.c \

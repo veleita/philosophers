@@ -6,11 +6,12 @@
 /*   By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 17:17:55 by mzomeno-          #+#    #+#             */
-/*   Updated: 2021/11/04 17:05:43 by mzomeno-         ###   ########.fr       */
+/*   Updated: 2021/11/09 12:53:02 by mzomeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+#include <pthread.h>
 
 /*
 ** each philo starts its own thread from function start_routine() in
@@ -54,18 +55,19 @@ t_philosopher	**get_philos(t_config *common)
 	return (philos);
 }
 
-t_fork			*get_forks(int number_of_philos)
+t_fork			**get_forks(int number_of_philos)
 {
-	t_fork	*forks;
+	t_fork	**forks;
 	int		i;
 
 	i = 0;
-	forks = (t_fork *)malloc(sizeof(t_fork) * number_of_philos);
+	forks = (t_fork **)malloc(sizeof(t_fork *) * number_of_philos);
 	while (i < number_of_philos)
 	{
-		forks[i].mutex = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
-		pthread_mutex_init(forks[i].mutex, NULL);
-		forks[i++].state = AVAIABLE;
+		forks[i] = (t_fork *)malloc(sizeof(t_fork));
+		forks[i]->mutex = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
+		pthread_mutex_init(forks[i]->mutex, NULL);
+		forks[i++]->state = AVAIABLE;
 	}
 	return (forks);
 }

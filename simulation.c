@@ -6,7 +6,7 @@
 /*   By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/31 23:11:04 by mzomeno-          #+#    #+#             */
-/*   Updated: 2021/11/04 17:08:53 by mzomeno-         ###   ########.fr       */
+/*   Updated: 2021/11/09 13:12:10 by mzomeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ bool	the_philo_needs_to_eat(struct timeval last_meal_time, int time_to_die,
 	struct timeval	actual_time;
 	long int		time_of_starvation;
 	long int		time_left;
-	int				time_to_digest;
+	int			time_to_digest;
 
 	gettimeofday(&actual_time, NULL);
 	time_of_starvation = get_time_lapse(actual_time, last_meal_time);
@@ -34,17 +34,16 @@ bool	the_philo_needs_to_eat(struct timeval last_meal_time, int time_to_die,
 		return (false);
 }
 
-static void	eat_sleep_or_think(t_philosopher *stats)
+static void	live(t_philosopher *stats)
 {
-	while (the_philo_needs_to_eat(stats->last_meal_time,
+	if (the_philo_needs_to_eat(stats->last_meal_time,
 				stats->common->time_to_die,
 				stats->common->time_to_eat,
-				stats->common->time_to_sleep) &&
-			stats->common->stop_simulation == false)
+				stats->common->time_to_sleep))
 	{
 		philo_eat(stats->id, stats->common->number_of_philosophers - 1,
 				stats->common, stats);
-		philo_sleep(stats->id, stats->common);
+//		philo_sleep(stats->id, stats->common);
 		printer(THINK, stats->id, stats->common);
 	}
 }
@@ -55,7 +54,7 @@ void	*start_routine(void *arg)
 
 	stats = (t_philosopher *)arg;
 	while (stats->common->stop_simulation == false)
-		eat_sleep_or_think(arg);
+		live(arg);
 	return (NULL);
 }
 
@@ -76,7 +75,7 @@ void	check_stop_conditions(t_config *common, t_philosopher **philos)
 				>= common->time_to_die)
 		{
 			common->stop_simulation = true;
-			printf("someone died\n");
+			printf("philo %d died\n", i);
 		}
 		pthread_mutex_unlock(&philos[i]->timelock);
 		i++;

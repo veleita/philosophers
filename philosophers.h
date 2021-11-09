@@ -6,7 +6,7 @@
 /*   By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 17:16:20 by mzomeno-          #+#    #+#             */
-/*   Updated: 2021/11/04 16:46:55 by mzomeno-         ###   ########.fr       */
+/*   Updated: 2021/11/09 12:54:51 by mzomeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <unistd.h>	// write
 # include <stdlib.h>	// malloc, free
 # include <sys/time.h>	// gettimeofday
-# include <stdio.h>		// printf
+# include <stdio.h>	// printf
 
 # define AVAIABLE 0
 # define TAKEN 1
@@ -28,11 +28,13 @@
 # define FAIL 0
 # define DONE 1
 
-# define FORKS	"has taken the forks"
-# define EAT 	"is eating"
-# define SLEEP 	"is sleeping"
-# define THINK 	"is thinking"
-# define DIE 	"died"
+# define FORKS		"has taken the forks"
+# define FORKSNT	"has left the forks"
+# define EAT 		"is eating"
+# define SLEEP 		"is sleeping"
+# define WAKE 		"woke up!"
+# define THINK 		"is thinking"
+# define DIE 		"died"
 
 
 /************ STRUCTS ************/
@@ -67,7 +69,7 @@ typedef struct 	s_config
 		int				time_to_eat;
 		int				time_to_sleep;
 		int				number_of_times_each_philosopher_must_eat;
-		t_fork			*forks;
+		t_fork			**forks;
 		pthread_mutex_t	printer;
 		bool			stop_simulation;
 		struct timeval	start_time;
@@ -100,7 +102,7 @@ typedef struct 		s_philosopher {
 ** init.c
 */
 t_config		get_common(char **argv);
-t_fork			*get_forks(int number_of_philos);
+t_fork			**get_forks(int number_of_philos);
 t_philosopher	**get_philos(t_config *common);
 void			launch_philos(int number_of_philosophers,
 				t_philosopher **philos);
