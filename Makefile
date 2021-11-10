@@ -6,12 +6,12 @@
 #    By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/17 13:37:33 by mzomeno-          #+#    #+#              #
-#    Updated: 2021/11/10 12:12:52 by mzomeno-         ###   ########.fr        #
+#    Updated: 2021/11/10 12:16:39 by mzomeno-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 COMPILER = gcc
-FLAGS = -Wall -Wextra -Werror -g
+FLAGS = -Wall -Wextra -Werror -pthread -g
 
 NAME = philo
 
@@ -25,7 +25,8 @@ SRCS = 	main.c \
 		utils.c \
 		custom_utils.c \
 		life_cycle.c \
-		simulation.c
+		simulation.c \
+		termination.c
 OBJS = 	$(SRCS:.c=.o)
 
 

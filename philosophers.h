@@ -6,7 +6,7 @@
 /*   By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 17:16:20 by mzomeno-          #+#    #+#             */
-/*   Updated: 2021/11/10 12:07:58 by mzomeno-         ###   ########.fr       */
+/*   Updated: 2021/11/10 12:15:32 by mzomeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <unistd.h>	// write
 # include <stdlib.h>	// malloc, free
 # include <sys/time.h>	// gettimeofday
-# include <stdio.h>		// printf
+# include <stdio.h>	// printf
 
 
 # define CORRECT 0
@@ -32,11 +32,13 @@
 # define TAKEN 1
 
 
-# define FORKS	"has taken the forks"
-# define EAT 	"is eating"
-# define SLEEP 	"is sleeping"
-# define THINK 	"is thinking"
-# define DIE 	"died"
+# define FORKS		"has taken the forks"
+# define FORKSNT	"has left the forks"
+# define EAT 		"is eating"
+# define SLEEP 		"is sleeping"
+# define WAKE 		"woke up!"
+# define THINK 		"is thinking"
+# define DIE 		"died"
 
 
 /************ STRUCTS ************/
@@ -71,7 +73,8 @@ typedef struct 	s_config
 		int				time_to_eat;
 		int				time_to_sleep;
 		int				number_of_times_each_philosopher_must_eat;
-		t_fork			*forks;
+		int				number_of_meals;
+		t_fork			**forks;
 		pthread_mutex_t	printer;
 		bool			stop_simulation;
 		struct timeval	start_time;
@@ -91,6 +94,7 @@ typedef struct 	s_config
 typedef struct 		s_philosopher {
 	int				id;
 	int				meals;
+	int				number_of_meals;
 	struct timeval	last_meal_time;
 	pthread_mutex_t	timelock;
 	pthread_t		*thread;
@@ -105,7 +109,7 @@ typedef struct 		s_philosopher {
 */
 int				check_args(char **argv, int argc);
 t_config		get_common(char **argv);
-t_fork			*get_forks(int number_of_philos);
+t_fork			**get_forks(int number_of_philos);
 t_philosopher	**get_philos(t_config *common);
 void			launch_philos(int number_of_philosophers,
 				t_philosopher **philos);
@@ -118,6 +122,7 @@ unsigned int	ft_atoi(char *str);
 bool			ft_str_isdigit(char *str);
 int				ft_strlen(char *str);
 int				ft_strcmp(const char *s1, const char *s2);
+void			ft_putnbr_fd(int n, int fd);
 
 
 /*
@@ -142,8 +147,13 @@ void		*start_routine(void *arg);
 */
 
 void	take_forks(int philo_id, int last_philo, t_config *common);
-void	philo_eat(int philo_id, int last_philo, t_config *common,
+void	eat_and_sleep(int philo_id, int last_philo, t_config *common,
 		t_philosopher *stats);
-void	philo_sleep(int philo_id, t_config *common);
+
+/*
+** termination.c
+*/
+
+void		death(int dead_philo_id, t_config *common, t_philosopher **philos);
 
 #endif
