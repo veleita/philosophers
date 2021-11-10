@@ -6,7 +6,7 @@
 /*   By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 17:17:55 by mzomeno-          #+#    #+#             */
-/*   Updated: 2021/11/04 17:05:43 by mzomeno-         ###   ########.fr       */
+/*   Updated: 2021/11/10 12:08:13 by mzomeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,21 @@ t_config	get_common(char **argv)
 	common.stop_simulation = false;
 	gettimeofday(&common.start_time, NULL);
 	return (common);	
+}
+
+int		check_args(char **argv, int argc)
+{
+	int i;
+
+	if (!(argc == 5 || argc == 6))
+		return (FAIL);
+	i = 1;
+	while (i < argc)
+	{
+		if (ft_str_isdigit(argv[i]) == false ||
+				num_correct(ft_atoi(argv[i])) == false)
+			return (FAIL);
+		i++;
+	}
+	return (CORRECT);
 }

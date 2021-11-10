@@ -6,11 +6,19 @@
 /*   By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:31:43 by mzomeno-          #+#    #+#             */
-/*   Updated: 2021/11/04 16:47:33 by mzomeno-         ###   ########.fr       */
+/*   Updated: 2021/11/10 12:07:35 by mzomeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+bool		num_correct(unsigned int num)
+{
+	if (num > INT_MAX || num <= 0)
+		return (false);
+	else
+		return (true);
+}
 
 long int	time_struct_to_int(struct timeval s)
 {

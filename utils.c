@@ -6,7 +6,7 @@
 /*   By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/31 21:50:36 by mzomeno-          #+#    #+#             */
-/*   Updated: 2021/11/04 14:36:48 by mzomeno-         ###   ########.fr       */
+/*   Updated: 2021/11/10 12:12:35 by mzomeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int				ft_strlen(char *str)
 	return (i);
 }
 
-bool			ft_isdigit(char *str)
+bool			ft_str_isdigit(char *str)
 {
 	while (*str)
 	{
@@ -52,8 +52,6 @@ unsigned int	ft_atoi(char *str)
 {
 	unsigned int i;
 
-	if (!ft_isdigit(str))
-		return (0);
 	i = 0;
 	while (*str != '\0')
 	{
