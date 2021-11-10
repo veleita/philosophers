@@ -6,7 +6,7 @@
 /*   By: mzomeno- <1veleita1@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 18:05:20 by mzomeno-          #+#    #+#             */
-/*   Updated: 2021/11/10 12:30:26 by mzomeno-         ###   ########.fr       */
+/*   Updated: 2021/11/10 12:49:39 by mzomeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	terminate(t_philosopher **philos, t_config *common)
 	free(philos);
 	printf("Simulation end\n");
 	pthread_mutex_destroy(&common->printer);
+	free(common);
 }
 
 void		death(int dead_philo_id, t_config *common, t_philosopher **philos)

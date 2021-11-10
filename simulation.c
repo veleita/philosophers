@@ -6,7 +6,7 @@
 /*   By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/31 23:11:04 by mzomeno-          #+#    #+#             */
-/*   Updated: 2021/11/10 12:26:39 by mzomeno-         ###   ########.fr       */
+/*   Updated: 2021/11/10 12:48:48 by mzomeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ void	*start_routine(void *arg)
 /*
 ** MAIN THREAD
 */
-static void	check_number_of_meals(t_config *common, bool *have_eaten_n_times)
+static void	check_number_of_meals(t_config *common, bool *have_eaten_n_times,
+		t_philosopher **philos)
 {
 	int i;
 
@@ -77,6 +78,11 @@ static void	check_number_of_meals(t_config *common, bool *have_eaten_n_times)
 		i++;
 	}
 	common->number_of_meals++;
+	if (common->number_of_meals == common->number_of_times_each_philosopher_must_eat)
+	{
+		common->stop_simulation = true;
+		terminate(philos, common);
+	}
 }
 
 void	check_stop_conditions(t_config *common, t_philosopher **philos)
@@ -94,13 +100,11 @@ void	check_stop_conditions(t_config *common, t_philosopher **philos)
 		gettimeofday(&actual_time, NULL);
 		if (get_time_lapse(actual_time, philos[i]->last_meal_time)
 				>= common->time_to_die + 10)
-			death(i, common, philos);
+			return (death(i, common, philos));
 		if (philos[i]->number_of_meals > common->number_of_meals)
 			have_eaten_n_times[i] = true;
 		pthread_mutex_unlock(&philos[i]->timelock);
 		i++;
 	}
-	check_number_of_meals(common, have_eaten_n_times);
-	if (common->number_of_meals == common->number_of_times_each_philosopher_must_eat)
-		terminate(philos, common);
+	check_number_of_meals(common, have_eaten_n_times, philos);
 }
