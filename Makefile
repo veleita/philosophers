@@ -6,7 +6,7 @@
 #    By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/17 13:37:33 by mzomeno-          #+#    #+#              #
-#    Updated: 2021/11/09 17:01:07 by mzomeno-         ###   ########.fr        #
+#    Updated: 2021/11/10 18:16:38 by mzomeno-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ SRCS = 	main.c \
 		utils.c \
 		custom_utils.c \
 		life_cycle.c \
+		termination.c \
 		simulation.c
 OBJS = 	$(SRCS:.c=.o)
 

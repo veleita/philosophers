@@ -6,7 +6,7 @@
 /*   By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/31 23:11:04 by mzomeno-          #+#    #+#             */
-/*   Updated: 2021/11/09 18:02:08 by mzomeno-         ###   ########.fr       */
+/*   Updated: 2021/11/10 18:12:55 by mzomeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,26 @@ void	*start_routine(void *arg)
 /*
 ** MAIN THREAD
 */
+static void	check_number_of_meals(t_config *common, bool *have_eaten_n_times,
+		t_philosopher **philos)
+{
+	int i;
+
+	i = 0;
+	while (i < common->number_of_philosophers)
+	{
+		if (have_eaten_n_times[i] == false)
+			return;
+		i++;
+	}
+	common->number_of_meals++;
+	if (common->number_of_meals == common->number_of_times_each_philosopher_must_eat)
+	{
+		common->stop_simulation = true;
+		terminate(philos, common);
+	}
+}
+
 void	check_stop_conditions(t_config *common, t_philosopher **philos)
 {
 	int i;
@@ -75,7 +95,6 @@ void	check_stop_conditions(t_config *common, t_philosopher **philos)
 	i = 0;
 	while (i < common->number_of_philosophers)
 	{
-		have_eaten_n_times[i] = false;
 		pthread_mutex_lock(&philos[i]->timelock);
 		gettimeofday(&actual_time, NULL);
 		if (get_time_lapse(actual_time, philos[i]->last_meal_time)
@@ -84,17 +103,12 @@ void	check_stop_conditions(t_config *common, t_philosopher **philos)
 			common->stop_simulation = true;
 			printer(DIE, i, common);
 		}
+		pthread_mutex_unlock(&philos[i]->timelock);
+		have_eaten_n_times[i] = false;
 		if (philos[i]->number_of_meals > common->number_of_meals)
 			have_eaten_n_times[i] = true;
-		pthread_mutex_unlock(&philos[i]->timelock);
 		i++;
 	}
-	i = 0;
-	while (i < common->number_of_philosophers)
-	{
-		if (have_eaten_n_times[i] == false)
-			return;
-		i++;
-	}
-	common->number_of_meals++;
+	check_number_of_meals(common, have_eaten_n_times, philos);
+	free(have_eaten_n_times);
 }
