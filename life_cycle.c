@@ -6,11 +6,19 @@
 /*   By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 13:41:07 by mzomeno-          #+#    #+#             */
-/*   Updated: 2021/11/10 12:15:55 by mzomeno-         ###   ########.fr       */
+/*   Updated: 2021/11/10 16:37:46 by mzomeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+static void	release_forks(t_fork **forks, int left_fork, int right_fork)
+{
+	pthread_mutex_unlock(forks[right_fork]->mutex);
+	pthread_mutex_unlock(forks[left_fork]->mutex);
+	forks[right_fork]->state = AVAIABLE;
+	forks[left_fork]->state = AVAIABLE;
+}
 
 static int	lock_fork(t_fork **forks, int fork_index)
 {
@@ -24,7 +32,8 @@ static int	lock_fork(t_fork **forks, int fork_index)
 		return (FAIL);
 }
 
-static void	reserve_forks(t_fork **forks, int right_fork, int left_fork)
+static void	reserve_forks(t_fork **forks, int right_fork, int left_fork,
+		t_config *common)
 {
 	bool	left_fork_taken;
 	bool	right_fork_taken;
@@ -33,6 +42,8 @@ static void	reserve_forks(t_fork **forks, int right_fork, int left_fork)
 	right_fork_taken = false;
 	while (left_fork_taken == false || right_fork_taken == false)
 	{
+		if (common->stop_simulation == true)
+			return (release_forks(forks, right_fork, left_fork));
 		if (right_fork_taken == true)
 		{
 			pthread_mutex_unlock(forks[right_fork]->mutex);
@@ -58,13 +69,6 @@ static void	just_eat(t_philosopher *stats)
 	ft_usleep(stats->common->time_to_eat, &(stats->common->stop_simulation));
 }
 
-static void	release_forks(t_fork **forks, int left_fork, int right_fork)
-{
-	pthread_mutex_unlock(forks[right_fork]->mutex);
-	pthread_mutex_unlock(forks[left_fork]->mutex);
-	forks[right_fork]->state = AVAIABLE;
-	forks[left_fork]->state = AVAIABLE;
-}
 /*
 ** Left_fork = philo_id
 ** Right_fork = philo_id + 1 (or 0 for the last philo)
@@ -83,10 +87,13 @@ void	eat_and_sleep(int philo_id, int last_philo, t_config *common,
 		right_fork = 0;
 	else
 		right_fork = philo_id + 1;
-	reserve_forks(common->forks, right_fork, left_fork);
-	printer(FORKS, philo_id, common);
-	just_eat(stats);
-	release_forks(common->forks, left_fork, right_fork);
-	printer(SLEEP, philo_id, common);
-	ft_usleep(common->time_to_sleep, &(common->stop_simulation));
+	reserve_forks(common->forks, right_fork, left_fork, common);
+	if (common->stop_simulation == false)
+	{
+		printer(FORKS, philo_id, common);
+		just_eat(stats);
+		release_forks(common->forks, left_fork, right_fork);
+		printer(SLEEP, philo_id, common);
+		ft_usleep(common->time_to_sleep, &(common->stop_simulation));
+	}
 }

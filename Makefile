@@ -6,7 +6,7 @@
 #    By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/17 13:37:33 by mzomeno-          #+#    #+#              #
-#    Updated: 2021/11/10 12:25:51 by mzomeno-         ###   ########.fr        #
+#    Updated: 2021/11/10 16:32:28 by mzomeno-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,7 @@ fclean: clean
 re: fclean all
 
 
-test: re
+test: fclean all
 	./$(NAME) $(N_PHILOS) $(TIME_TO_DIE) $(TIME_TO_EAT) $(TIME_TO_SLEEP)
 
 

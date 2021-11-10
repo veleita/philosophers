@@ -6,7 +6,7 @@
 /*   By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:31:43 by mzomeno-          #+#    #+#             */
-/*   Updated: 2021/11/10 12:16:29 by mzomeno-         ###   ########.fr       */
+/*   Updated: 2021/11/10 16:27:42 by mzomeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,7 @@ void	printer(const char *message, int philo_id, t_config *common)
 	pthread_mutex_lock(&common->printer);
 	gettimeofday(&time, NULL);
 	if (common->stop_simulation == false || !ft_strcmp(DIE, message))
-/*	{
-		ft_putnbr_fd(get_time_lapse(time, common->start_time), 2);
-		write(2, " ", 1);
-		ft_putnbr_fd(philo_id, 2);
-		write(2, " ", 1);
-		write(2, message, ft_strlen(message));
-		write(2, "\n", 1);
-	}
-*/		printf("[%li] Philosopher %i %s\n",
+		printf("[%li] Philosopher %i %s\n",
 			get_time_lapse(time, common->start_time),
 			philo_id + 1, message);
 	pthread_mutex_unlock(&common->printer);
