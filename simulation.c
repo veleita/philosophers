@@ -6,7 +6,7 @@
 /*   By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/31 23:11:04 by mzomeno-          #+#    #+#             */
-/*   Updated: 2021/11/09 18:12:10 by mzomeno-         ###   ########.fr       */
+/*   Updated: 2021/11/10 12:26:39 by mzomeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,20 @@ void	*start_routine(void *arg)
 /*
 ** MAIN THREAD
 */
+static void	check_number_of_meals(t_config *common, bool *have_eaten_n_times)
+{
+	int i;
+
+	i = 0;
+	while (i < common->number_of_philosophers)
+	{
+		if (have_eaten_n_times[i] == false)
+			return;
+		i++;
+	}
+	common->number_of_meals++;
+}
+
 void	check_stop_conditions(t_config *common, t_philosopher **philos)
 {
 	int i;
@@ -86,12 +100,7 @@ void	check_stop_conditions(t_config *common, t_philosopher **philos)
 		pthread_mutex_unlock(&philos[i]->timelock);
 		i++;
 	}
-	i = 0;
-	while (i < common->number_of_philosophers)
-	{
-		if (have_eaten_n_times[i] == false)
-			return;
-		i++;
-	}
-	common->number_of_meals++;
+	check_number_of_meals(common, have_eaten_n_times);
+	if (common->number_of_meals == common->number_of_times_each_philosopher_must_eat)
+		terminate(philos, common);
 }

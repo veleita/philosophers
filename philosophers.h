@@ -6,7 +6,7 @@
 /*   By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 17:16:20 by mzomeno-          #+#    #+#             */
-/*   Updated: 2021/11/10 12:15:32 by mzomeno-         ###   ########.fr       */
+/*   Updated: 2021/11/10 12:30:29 by mzomeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ void			launch_philos(int number_of_philosophers,
 
 unsigned int	ft_atoi(char *str);
 bool			ft_str_isdigit(char *str);
-int				ft_strlen(char *str);
+int				ft_strlen(const char *str);
 int				ft_strcmp(const char *s1, const char *s2);
 void			ft_putnbr_fd(int n, int fd);
 
@@ -154,6 +154,7 @@ void	eat_and_sleep(int philo_id, int last_philo, t_config *common,
 ** termination.c
 */
 
-void		death(int dead_philo_id, t_config *common, t_philosopher **philos);
+void	death(int dead_philo_id, t_config *common, t_philosopher **philos);
+void	terminate(t_philosopher **philos, t_config *common);
 
 #endif

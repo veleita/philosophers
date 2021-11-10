@@ -6,7 +6,7 @@
 #    By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/17 13:37:33 by mzomeno-          #+#    #+#              #
-#    Updated: 2021/11/10 12:16:39 by mzomeno-         ###   ########.fr        #
+#    Updated: 2021/11/10 12:25:51 by mzomeno-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ N_PHILOS 		= 5
 TIME_TO_DIE 	= 800
 TIME_TO_EAT 	= 200
 TIME_TO_SLEEP 	= 200
+N_MEALS 		= 7
 
 SRCS = 	main.c \
 		init.c \
