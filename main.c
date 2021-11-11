@@ -6,7 +6,7 @@
 /*   By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/17 13:37:14 by mzomeno-          #+#    #+#             */
-/*   Updated: 2021/11/11 10:30:07 by mzomeno-         ###   ########.fr       */
+/*   Updated: 2021/11/11 10:39:10 by mzomeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,11 @@ int main(int argc, char **argv)
 		while (common.stop_simulation == false)
 			check_stop_conditions(&common, philos);
 	}
-	system("leaks philo");
+	else
+	{
+		printf("usage: ./philo "
+			"[N_PHILOS] [TIME_TO_DIE] [TIME_TO_EAT] [TIME_TO_SLEEP]"
+			" <optional>[N_MEALS]");
+	}
 	return (0);
 }
