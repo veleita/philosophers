@@ -6,7 +6,7 @@
 #    By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/17 13:37:33 by mzomeno-          #+#    #+#              #
-#    Updated: 2021/11/10 18:16:38 by mzomeno-         ###   ########.fr        #
+#    Updated: 2021/11/11 09:57:31 by mzomeno-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ N_PHILOS 		= 5
 TIME_TO_DIE 	= 800
 TIME_TO_EAT 	= 200
 TIME_TO_SLEEP 	= 200
+N_MEALS 		= 7
 
 SRCS = 	main.c \
 		init.c \
@@ -29,6 +30,7 @@ SRCS = 	main.c \
 		simulation.c
 OBJS = 	$(SRCS:.c=.o)
 
+OTHER_GARBAGE = *.dSYM .*.swp tags
 
 all: $(NAME)
 
@@ -42,6 +44,7 @@ $(NAME): $(OBJS)
 
 clean:
 	rm -f $(OBJS)
+	rm -rf $(OTHER_GARBAGE)
 
 fclean: clean
 	rm -f $(NAME)
@@ -51,7 +54,7 @@ re: fclean all
 
 
 test: re
-	./$(NAME) $(N_PHILOS) $(TIME_TO_DIE) $(TIME_TO_EAT) $(TIME_TO_SLEEP)
+	./$(NAME) $(N_PHILOS) $(TIME_TO_DIE) $(TIME_TO_EAT) $(TIME_TO_SLEEP) $(N_MEALS)
 
 
 .PHONY: all clean fclean re test

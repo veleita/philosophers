@@ -6,7 +6,7 @@
 /*   By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 18:10:04 by mzomeno-          #+#    #+#             */
-/*   Updated: 2021/11/10 18:11:16 by mzomeno-         ###   ########.fr       */
+/*   Updated: 2021/11/11 09:55:54 by mzomeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ void	terminate(t_philosopher **philos, t_config *common)
 	}
 	free(common->forks);
 	free(philos);
-	printf("Simulation end\n");
 	pthread_mutex_destroy(&common->printer);
+	printf("---------------THE END---------------\n");
 }
 
 void		death(int dead_philo_id, t_config *common,
