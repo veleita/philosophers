@@ -6,7 +6,7 @@
 /*   By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 17:17:55 by mzomeno-          #+#    #+#             */
-/*   Updated: 2021/11/11 10:43:44 by mzomeno-         ###   ########.fr       */
+/*   Updated: 2021/11/11 17:37:20 by mzomeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ t_philosopher	**get_philos(t_config *common)
 	while (i < common->number_of_philosophers)
 	{
 		philos[i]->id = i;
-		philos[i]->meals = 0;
 		philos[i]->common = common;
 		philos[i]->last_meal_time = start_time;
 		philos[i]->number_of_meals = 0;

@@ -6,7 +6,7 @@
 /*   By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 18:10:04 by mzomeno-          #+#    #+#             */
-/*   Updated: 2021/11/11 11:54:55 by mzomeno-         ###   ########.fr       */
+/*   Updated: 2021/11/11 17:49:35 by mzomeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	terminate(t_philosopher **philos, t_config *common)
 	i = 0;
 	while (i < common->number_of_philosophers)
 	{
+		pthread_mutex_destroy(&philos[i]->timelock);
 		free(philos[i]->thread);
 		free(philos[i]);
 		pthread_mutex_destroy(common->forks[i]->mutex);
@@ -38,7 +39,6 @@ void	terminate(t_philosopher **philos, t_config *common)
 	free(common->forks);
 	free(philos);
 	pthread_mutex_destroy(&common->printer);
-	printf("---------------THE END---------------\n");
 }
 
 void	death(int dead_philo_id, t_config *common,
@@ -49,4 +49,12 @@ void	death(int dead_philo_id, t_config *common,
 	printer(DIE, dead_philo_id, common);
 	pthread_mutex_unlock(&philos[dead_philo_id]->timelock);
 	terminate(philos, common);
+}
+
+/* Such a patch */
+int	one_philo(int time_to_die)
+{
+	printf("[%d] Philosopher 0 died\n", time_to_die);
+	printf("---------------THE END---------------\n");
+	return (0);
 }

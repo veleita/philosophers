@@ -6,12 +6,12 @@
 #    By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/17 13:37:33 by mzomeno-          #+#    #+#              #
-#    Updated: 2021/11/11 11:49:59 by mzomeno-         ###   ########.fr        #
+#    Updated: 2021/11/11 17:36:59 by mzomeno-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 COMPILER = gcc
-FLAGS = -Wall -Wextra -Werror -pthread -g -fsanitize=address 
+FLAGS = -Wall -Wextra -Werror -pthread -g 
 
 NAME = philo
 
