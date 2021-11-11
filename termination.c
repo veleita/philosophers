@@ -6,11 +6,31 @@
 /*   By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 18:10:04 by mzomeno-          #+#    #+#             */
-/*   Updated: 2021/11/11 17:49:35 by mzomeno-         ###   ########.fr       */
+/*   Updated: 2021/11/11 18:07:11 by mzomeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+static void	free_all(t_philosopher **philos, t_config *common)
+{
+	int	i;
+
+	i = 0;
+	while (i < common->number_of_philosophers)
+	{
+		pthread_mutex_destroy(&philos[i]->timelock);
+		free(philos[i]->thread);
+		free(philos[i]);
+		pthread_mutex_destroy(common->forks[i]->mutex);
+		free(common->forks[i]->mutex);
+		free(common->forks[i]);
+		i++;
+	}
+	free(common->forks);
+	free(philos);
+	pthread_mutex_destroy(&common->printer);
+}
 
 void	terminate(t_philosopher **philos, t_config *common)
 {
@@ -26,19 +46,7 @@ void	terminate(t_philosopher **philos, t_config *common)
 			pthread_mutex_unlock(common->forks[i + 1]->mutex);
 		pthread_join(*philos[i++]->thread, NULL);
 	}
-	i = 0;
-	while (i < common->number_of_philosophers)
-	{
-		pthread_mutex_destroy(&philos[i]->timelock);
-		free(philos[i]->thread);
-		free(philos[i]);
-		pthread_mutex_destroy(common->forks[i]->mutex);
-		free(common->forks[i]);
-		i++;
-	}
-	free(common->forks);
-	free(philos);
-	pthread_mutex_destroy(&common->printer);
+	free_all(philos, common);
 }
 
 void	death(int dead_philo_id, t_config *common,
