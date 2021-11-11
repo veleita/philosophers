@@ -6,7 +6,7 @@
 /*   By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 18:10:04 by mzomeno-          #+#    #+#             */
-/*   Updated: 2021/11/11 09:55:54 by mzomeno-         ###   ########.fr       */
+/*   Updated: 2021/11/11 11:54:55 by mzomeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	terminate(t_philosopher **philos, t_config *common)
 	printf("---------------THE END---------------\n");
 }
 
-void		death(int dead_philo_id, t_config *common,
+void	death(int dead_philo_id, t_config *common,
 					t_philosopher **philos, bool *have_eaten_n_times)
 {
 	common->stop_simulation = true;

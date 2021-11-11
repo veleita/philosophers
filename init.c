@@ -6,7 +6,7 @@
 /*   By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 17:17:55 by mzomeno-          #+#    #+#             */
-/*   Updated: 2021/11/11 10:38:11 by mzomeno-         ###   ########.fr       */
+/*   Updated: 2021/11/11 10:43:44 by mzomeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 ** each philo starts its own thread from function start_routine() in
 ** simulation.c, this thread is executed alongside the main thread
 */
-void			launch_philos(int number_of_philosophers, t_philosopher **philos)
+void	launch_philos(int number_of_philosophers, t_philosopher **philos)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < number_of_philosophers)
@@ -35,8 +35,8 @@ t_philosopher	**get_philos(t_config *common)
 	struct timeval	start_time;
 	int				i;
 
-	philos = (t_philosopher **)malloc(sizeof(t_philosopher *) *
-			common->number_of_philosophers);
+	philos = (t_philosopher **)malloc(sizeof(t_philosopher *)
+			* common->number_of_philosophers);
 	i = 0;
 	while (i < common->number_of_philosophers)
 		philos[i++] = (t_philosopher *)malloc(sizeof(t_philosopher));
@@ -56,7 +56,7 @@ t_philosopher	**get_philos(t_config *common)
 	return (philos);
 }
 
-t_fork			**get_forks(int number_of_philos)
+t_fork	**get_forks(int number_of_philos)
 {
 	t_fork	**forks;
 	int		i;
@@ -88,20 +88,20 @@ t_config	get_common(char **argv)
 	pthread_mutex_init(&common.printer, NULL);
 	common.stop_simulation = false;
 	gettimeofday(&common.start_time, NULL);
-	return (common);	
+	return (common);
 }
 
-int		check_args(char **argv, int argc)
+int	check_args(char **argv, int argc)
 {
-	int i;
+	int	i;
 
 	if (!(argc == 5 || argc == 6))
-		return (FAIL);
+		return (1);
 	i = 1;
 	while (i < argc)
 	{
-		if (ft_str_isdigit(argv[i]) == false ||
-				num_correct(ft_atoi(argv[i])) == false)
+		if (ft_str_isdigit(argv[i]) == false
+			|| num_correct(ft_atoi(argv[i])) == false)
 			return (1);
 		i++;
 	}

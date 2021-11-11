@@ -6,7 +6,7 @@
 /*   By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 13:41:07 by mzomeno-          #+#    #+#             */
-/*   Updated: 2021/11/09 18:00:26 by mzomeno-         ###   ########.fr       */
+/*   Updated: 2021/11/11 13:06:15 by mzomeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	reserve_forks(t_fork **forks, int right_fork, int left_fork)
 {
 	bool	left_fork_taken;
 	bool	right_fork_taken;
-	
+
 	left_fork_taken = false;
 	right_fork_taken = false;
 	while (left_fork_taken == false || right_fork_taken == false)
@@ -65,6 +65,7 @@ static void	release_forks(t_fork **forks, int left_fork, int right_fork)
 	forks[right_fork]->state = AVAIABLE;
 	forks[left_fork]->state = AVAIABLE;
 }
+
 /*
 ** Left_fork = philo_id
 ** Right_fork = philo_id + 1 (or 0 for the last philo)

@@ -6,13 +6,13 @@
 /*   By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/17 13:37:14 by mzomeno-          #+#    #+#             */
-/*   Updated: 2021/11/11 10:39:10 by mzomeno-         ###   ########.fr       */
+/*   Updated: 2021/11/11 10:44:05 by mzomeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	t_config		common;
 	t_philosopher	**philos;

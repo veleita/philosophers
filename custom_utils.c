@@ -6,13 +6,13 @@
 /*   By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:31:43 by mzomeno-          #+#    #+#             */
-/*   Updated: 2021/11/11 10:19:08 by mzomeno-         ###   ########.fr       */
+/*   Updated: 2021/11/11 10:40:56 by mzomeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-bool		num_correct(unsigned int num)
+bool	num_correct(unsigned int num)
 {
 	if (num > INT_MAX || num <= 0)
 		return (false);

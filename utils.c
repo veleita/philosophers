@@ -6,13 +6,13 @@
 /*   By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/31 21:50:36 by mzomeno-          #+#    #+#             */
-/*   Updated: 2021/11/11 10:22:17 by mzomeno-         ###   ########.fr       */
+/*   Updated: 2021/11/11 10:45:01 by mzomeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int				ft_strcmp(const char *s1, const char *s2)
+int	ft_strcmp(const char *s1, const char *s2)
 {
 	while (*s1 && *s2)
 	{
@@ -27,9 +27,9 @@ int				ft_strcmp(const char *s1, const char *s2)
 		return (0);
 }
 
-int				ft_strlen(const char *str)
+int	ft_strlen(const char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i] != '\0')
@@ -37,7 +37,7 @@ int				ft_strlen(const char *str)
 	return (i);
 }
 
-bool			ft_str_isdigit(char *str)
+bool	ft_str_isdigit(char *str)
 {
 	while (*str)
 	{
@@ -50,7 +50,7 @@ bool			ft_str_isdigit(char *str)
 
 unsigned int	ft_atoi(char *str)
 {
-	unsigned int i;
+	unsigned int	i;
 
 	i = 0;
 	while (*str != '\0')
