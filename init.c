@@ -6,7 +6,7 @@
 /*   By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 17:17:55 by mzomeno-          #+#    #+#             */
-/*   Updated: 2021/11/11 09:52:23 by mzomeno-         ###   ########.fr       */
+/*   Updated: 2021/11/11 10:30:56 by mzomeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,25 @@ t_config	get_common(char **argv)
 		common.number_of_times_each_philosopher_must_eat = ft_atoi(argv[5]);
 	common.number_of_meals = 0;
 	common.forks = get_forks(common.number_of_philosophers);
+	pthread_mutex_init(&common.printer, NULL);
 	common.stop_simulation = false;
 	gettimeofday(&common.start_time, NULL);
 	return (common);	
+}
+
+int		check_args(char **argv, int argc)
+{
+	int i;
+
+	if (!(argc == 5 || argc == 6))
+		return (FAIL);
+	i = 1;
+	while (i < argc)
+	{
+		if (ft_str_isdigit(argv[i]) == false ||
+				num_correct(ft_atoi(argv[i])) == false)
+			return (1);
+		i++;
+	}
+	return (CORRECT);
 }

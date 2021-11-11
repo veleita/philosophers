@@ -6,7 +6,7 @@
 /*   By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/31 21:50:36 by mzomeno-          #+#    #+#             */
-/*   Updated: 2021/11/09 16:57:26 by mzomeno-         ###   ########.fr       */
+/*   Updated: 2021/11/11 10:22:17 by mzomeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int				ft_strlen(const char *str)
 	return (i);
 }
 
-bool			ft_isdigit(char *str)
+bool			ft_str_isdigit(char *str)
 {
 	while (*str)
 	{
@@ -52,8 +52,6 @@ unsigned int	ft_atoi(char *str)
 {
 	unsigned int i;
 
-	if (!ft_isdigit(str))
-		return (0);
 	i = 0;
 	while (*str != '\0')
 	{
@@ -65,29 +63,4 @@ unsigned int	ft_atoi(char *str)
 	}
 	i /= 10;
 	return (i);
-}
-
-void	ft_putnbr_fd(int n, int fd)
-{
-	unsigned int	nb;
-	char		aux_char[1];
-
-	if (n < 0)
-	{
-		nb = (unsigned int)(n * -1);
-		aux_char[0] = '-';
-		write(fd, aux_char, 1);
-	}
-	else
-		nb = (unsigned int)n;
-	if (nb >= 10)
-	{
-		ft_putnbr_fd(nb / 10, fd);
-		ft_putnbr_fd(nb % 10, fd);
-	}
-	else
-	{
-		aux_char[0] = nb + '0';
-		write(fd, aux_char, 1);
-	}
 }

@@ -6,7 +6,7 @@
 /*   By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 17:16:20 by mzomeno-          #+#    #+#             */
-/*   Updated: 2021/11/11 09:47:30 by mzomeno-         ###   ########.fr       */
+/*   Updated: 2021/11/11 10:23:47 by mzomeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,12 @@
 # include <sys/time.h>	// gettimeofday
 # include <stdio.h>	// printf
 
-# define AVAIABLE 0
-# define TAKEN 1
-
+# define CORRECT 0
 # define FAIL 0
 # define DONE 1
+
+# define AVAIABLE 0
+# define TAKEN 1
 
 # define FORKS		"has taken the forks"
 # define FORKSNT	"has left the forks"
@@ -108,16 +109,16 @@ t_fork			**get_forks(int number_of_philos);
 t_philosopher	**get_philos(t_config *common);
 void			launch_philos(int number_of_philosophers,
 				t_philosopher **philos);
+int				check_args(char **argv, int argc);
 
 /*
 ** utils.c
 */
 
 unsigned int	ft_atoi(char *str);
-bool			ft_isdigit(char *str);
+bool			ft_str_isdigit(char *str);
 int				ft_strlen(const char *str);
 int				ft_strcmp(const char *s1, const char *s2);
-void	ft_putnbr_fd(int n, int fd);
 
 
 /*
@@ -127,6 +128,7 @@ void		ft_usleep(int ms, bool *stop_simulation);
 void		printer(const char *message, int philo_id, t_config *common);
 long int	time_struct_to_int(struct timeval s);
 long int	get_time_lapse(struct timeval t1, struct timeval t2);
+bool		num_correct(unsigned int num);
 
 /*
 ** simulation.c
