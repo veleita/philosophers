@@ -6,7 +6,7 @@
 /*   By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/17 13:37:14 by mzomeno-          #+#    #+#             */
-/*   Updated: 2021/11/11 18:08:39 by mzomeno-         ###   ########.fr       */
+/*   Updated: 2021/11/12 10:06:48 by mzomeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	main(int argc, char **argv)
 	{
 		common = get_common(argv);
 		if (common.number_of_philosophers == 1)
-			return (one_philo(common.time_to_die));
+			return (one_philo(&common));
 		philos = get_philos(&common);
 		launch_philos(common.number_of_philosophers, philos);
 		while (common.stop_simulation == false)

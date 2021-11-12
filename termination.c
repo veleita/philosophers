@@ -6,7 +6,7 @@
 /*   By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 18:10:04 by mzomeno-          #+#    #+#             */
-/*   Updated: 2021/11/11 18:07:11 by mzomeno-         ###   ########.fr       */
+/*   Updated: 2021/11/12 10:07:15 by mzomeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,21 @@ void	death(int dead_philo_id, t_config *common,
 }
 
 /* Such a patch */
-int	one_philo(int time_to_die)
+int	one_philo(t_config *common)
 {
-	printf("[%d] Philosopher 0 died\n", time_to_die);
+	int i;
+
+	i = 0;
+	while (i < common->number_of_philosophers)
+	{
+		pthread_mutex_destroy(common->forks[i]->mutex);
+		free(common->forks[i]->mutex);
+		free(common->forks[i]);
+		i++;
+	}
+	free(common->forks);
+	pthread_mutex_destroy(&common->printer);
+	printf("[%d] Philosopher 0 died\n", common->time_to_die);
 	printf("---------------THE END---------------\n");
 	return (0);
 }
