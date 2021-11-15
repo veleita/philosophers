@@ -6,7 +6,7 @@
 /*   By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/31 23:11:04 by mzomeno-          #+#    #+#             */
-/*   Updated: 2021/11/11 17:33:22 by mzomeno-         ###   ########.fr       */
+/*   Updated: 2021/11/15 20:02:02 by mzomeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,10 @@ void	*start_routine(void *arg)
 		stats->common, stats);
 	printer(THINK, stats->id, stats->common);
 	while (stats->common->stop_simulation == false)
+	{
 		live(arg);
+		usleep(100);
+	}
 	return (NULL);
 }
 
@@ -88,6 +91,7 @@ void	check_stop_conditions(t_config *common, t_philosopher **philos)
 	struct timeval	actual_time;
 	bool			*have_eaten_n_times;
 
+	usleep(100);
 	have_eaten_n_times = (bool *)malloc(sizeof(bool)
 			* common->number_of_philosophers);
 	i = 0;

@@ -6,7 +6,7 @@
 /*   By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:31:43 by mzomeno-          #+#    #+#             */
-/*   Updated: 2021/11/11 10:40:56 by mzomeno-         ###   ########.fr       */
+/*   Updated: 2021/11/15 20:04:02 by mzomeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	ft_usleep(int ms, bool *stop_simulation)
 	gettimeofday(&current, NULL);
 	while (*stop_simulation == false && get_time_lapse(current, init) < ms)
 	{
-		usleep(1);
+		usleep(1000);
 		gettimeofday(&current, NULL);
 	}
 }

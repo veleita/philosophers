@@ -6,7 +6,7 @@
 /*   By: mzomeno- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 18:10:04 by mzomeno-          #+#    #+#             */
-/*   Updated: 2021/11/12 10:07:15 by mzomeno-         ###   ########.fr       */
+/*   Updated: 2021/11/15 20:00:29 by mzomeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	death(int dead_philo_id, t_config *common,
 /* Such a patch */
 int	one_philo(t_config *common)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < common->number_of_philosophers)
